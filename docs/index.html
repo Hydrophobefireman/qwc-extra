@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>dom-repeat | custom element</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="main">
+      <dom-repeat
+        domfor='{"loop":[1,2,3,4,5],"tree":{"el":"div","child":{"el":"span","children":"{{data}}"}}}'
+      ></dom-repeat>
+    </div>
+    <script>
+      onerror = (...n) => alert(n.join("\n"));
+    </script>
+    <script type="module">
+      import { domRepeat } from "./index.modern.js";
+      domRepeat();
+    </script>
+  </body>
+</html>
