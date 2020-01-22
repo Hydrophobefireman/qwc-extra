@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>dom-repeat | custom element</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="main">
+      <cache-script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></cache-script>   </div>    <script>
+      onerror = (...n) => alert(n.join("\n"));
+    </script>
+    <script type="module">
+      import { cacheScript as dr } from "../index.modern.js";
+      dr();
+	setTimeout(()=>document.getElementById("main").textContent="typeof jQuery: "+typeof jQuery,1000)
+    </script>
+  </body>
+</html>

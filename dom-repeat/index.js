@@ -1,20 +1,21 @@
 import { init } from "../node_modules/@hydrophobefireman/qwc/dist/index.modern.js";
 import { getTemplate } from "../getTemplate.js";
 const DATA = "{{data}}";
-
+const regex = new RegExp(DATA, "g");
+const substitute = (o, s) => (typeof o === "string" ? o.replace(regex, s) : o);
 const makeDom = (obj, spec) => {
-  obj === DATA && (obj = spec);
+  obj = substitute(obj, spec);
   if ("object" != typeof obj) return document.createTextNode(obj);
   let { el, attrs, children } = obj;
   !Array.isArray(children) && (children = [children]);
   const i = document.createElement(el);
   for (let a of Object.keys(attrs || {})) {
-    a === DATA && (a = spec);
+    a = substitute(a, spec);
     let u = attrs[a];
-    u === DATA && (u = spec),
-      "o" === a[0] && "n" === a[1]
-        ? i.addEventListener(a.substr(2), u)
-        : i.setAttribute(a, u);
+    u = substitute(u, spec);
+    "o" === a[0] && "n" === a[1]
+      ? i.addEventListener(a.substr(2), u)
+      : i.setAttribute(a, u);
   }
   for (const c of children || []) i.appendChild(makeDom(c, spec));
   return i;
@@ -57,4 +58,4 @@ const h = () =>
     getTemplate("dom-repeat")
   );
 
-export default h
+export default h;
