@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>dom-repeat | custom element</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="main">
+      <dom-router id="ok" base="/dom-router"></dom-router>
+      <dom-link href="page1">Page 1</dom-link>
+	<dom-link href="./page2">Page 2 </dom-link>
+	<dom-link href="/dom-router">Home</dom-router>
+    </div>
+    <script>
+      onerror = (...n) => alert(n.join("\n"));
+    </script>
+    <script type="module">
+      import { domRouter as dr } from "../index.modern.js";
+      dr();
+      const a = self.ok;
+      a.paths = {
+        "/":document.createTextNode("Home Page"),
+        page1: document.createTextNode("Page 1"),
+		page2: document.createTextNode("Page 2")
+      };
+    </script>
+  </body>
+</html>
