@@ -7,7 +7,7 @@
     "@hydrophobefireman/qwc": "0.0.6"
   },
   "devDependencies": {
-    "microbundle": "^0.12.0-next.7"
+    "microbundle": "^0.13.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

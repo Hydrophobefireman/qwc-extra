@@ -14,7 +14,7 @@ const obj = {
           }
           if (!toFetch) return createScript({ src: url });
           return createScript(fetchScript(url));
-        }
+        },
       },
       connectedCallback: {
         value() {
@@ -22,16 +22,16 @@ const obj = {
           const props = this._pendingProps;
           if (props) this._load(props.abs, props.url);
           this._pendingProps = null;
-        }
-      }
+        },
+      },
     });
   },
   observedAttributes: [
     {
       prop: "cors-safe-origins",
       listener(o, n) {
-        this._corsSafe.concat(n.split(","));
-      }
+        (this._corsSafe || (this._corsSafe = [])).concat(n.split(","));
+      },
     },
     {
       prop: "src",
@@ -43,12 +43,12 @@ const obj = {
           return (this._pendingProps = { abs, url });
         }
         this._load(abs, url);
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 function createScript(obj) {
-  Promise.resolve(obj).then(data =>
+  Promise.resolve(obj).then((data) =>
     document.head.appendChild(
       Object.assign(document.createElement("script"), data)
     )
@@ -56,33 +56,33 @@ function createScript(obj) {
 }
 const hasCache = "caches" in self;
 const fetchScript = hasCache
-  ? src =>
-      new Promise(resolve =>
-        caches.open("js").then(cache =>
-          cache.match(src).then(response => {
+  ? (src) =>
+      new Promise((resolve) =>
+        caches.open("js").then((cache) =>
+          cache.match(src).then((response) => {
             if (response) {
-              response.text().then(x => resolve(x));
+              response.text().then((x) => resolve(x));
             } else {
-              fetch(src).then(resp => {
+              fetch(src).then((resp) => {
                 const clone = resp.clone();
                 cache.put(src, clone);
-                resp.text().then(x => resolve({ text: x }));
+                resp.text().then((x) => resolve({ text: x }));
               });
             }
           })
         )
       )
-  : src =>
-      new Promise(resolve =>
+  : (src) =>
+      new Promise((resolve) =>
         fetch(src)
-          .then(x => x.text())
-          .then(txt => resolve({ text: txt }))
+          .then((x) => x.text())
+          .then((txt) => resolve({ text: txt }))
       );
 
 export default () =>
   init(
     {
-      "cache-script": obj
+      "cache-script": obj,
     },
     {},
     tpl
