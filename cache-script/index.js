@@ -30,7 +30,7 @@ const obj = {
     {
       prop: "cors-safe-origins",
       listener(o, n) {
-        (this._corsSafe || (this._corsSafe = [])).concat(n.split(","));
+        this._corsSafe = (this._corsSafe || []).concat(n.split(","));
       },
     },
     {
@@ -61,7 +61,7 @@ const fetchScript = hasCache
         caches.open("js").then((cache) =>
           cache.match(src).then((response) => {
             if (response) {
-              response.text().then((x) => resolve(x));
+              response.text().then((x) => resolve({ text: x }));
             } else {
               fetch(src).then((resp) => {
                 const clone = resp.clone();
